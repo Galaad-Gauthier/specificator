@@ -30,7 +30,7 @@ module Specificator::Expectation
     def call
       return unless valid?
 
-      expectations.map{ |expectation| "it { should #{expectation} }" }
+      "it { should #{expectation} }"
     end
 
     def valid?
@@ -39,7 +39,7 @@ module Specificator::Expectation
 
     private
 
-    def expectations
+    def expectation
       expectation = "#{association_type}(#{association.name.inspect})"
 
       association.options.each do |name, value|
