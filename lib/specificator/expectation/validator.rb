@@ -89,14 +89,14 @@ module Specificator::Expectation
     end
 
     def valid?
-      validator_type.in?(OPTIONS_MAPPING.keys)
+      validator_kind.in?(OPTIONS_MAPPING.keys)
     end
 
     private
 
     def expectations
       validator.attributes.map do |attribute|
-        expectation_base = "validate_#{validator_type}_of(#{attribute.inspect})"
+        expectation_base = "validate_#{validator_kind}_of(#{attribute.inspect})"
 
         options_expectations = validator.options.map do |name, value|
           next unless (matcher_function = matcher_function_for(name, value))
@@ -112,12 +112,12 @@ module Specificator::Expectation
       end.flatten.compact
     end
 
-    def validator_type
-      @validator_type ||= validator.class.to_s.match(/(\w+)Validator$/)[1]&.downcase.to_sym
+    def validator_kind
+      validator.kind
     end
 
     def matcher_function_for(name, value)
-      matcher_function = OPTIONS_MAPPING[validator_type][name]
+      matcher_function = OPTIONS_MAPPING[validator_kind][name]
       matcher_function.is_a?(Hash) ? matcher_function[value.class] : matcher_function
     end
 
