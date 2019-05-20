@@ -40,19 +40,19 @@ module Specificator::Expectation
     private
 
     def expectations
-      expectation_base = "#{association_type}(#{association.name.inspect})"
+      expectation = "#{association_type}(#{association.name.inspect})"
 
-      options_expectations = association.options.map do |name, value|
+      association.options.each do |name, value|
         next unless (matcher_function = OPTIONS_MAPPING[name])
 
         if !!value == value
-          expectation_base + ".#{matcher_function}"
+          expectation += ".#{matcher_function}"
         else
-          expectation_base + ".#{matcher_function}(#{value.inspect})"
+          expectation += ".#{matcher_function}(#{value.inspect})"
         end
       end
 
-      (options_expectations.presence || [expectation_base]).flatten.compact
+      expectation
     end
 
     def association_type
