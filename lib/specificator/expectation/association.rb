@@ -13,7 +13,8 @@ module Specificator::Expectation
       primary_key: :with_primary_key,
       foreign_key: :with_foreign_key,
       dependent: :dependent,
-      counter_cache: :counter_cache
+      counter_cache: :counter_cache,
+      optional: :optional
     }
 
     attr_accessor :association
@@ -43,7 +44,12 @@ module Specificator::Expectation
 
       options_expectations = association.options.map do |name, value|
         next unless (matcher_function = OPTIONS_MAPPING[name])
-        expectation_base + ".#{matcher_function}(#{value.inspect})"
+
+        if !!value == value
+          expectation_base + ".#{matcher_function}"
+        else
+          expectation_base + ".#{matcher_function}(#{value.inspect})"
+        end
       end
 
       (options_expectations.presence || [expectation_base]).flatten.compact
