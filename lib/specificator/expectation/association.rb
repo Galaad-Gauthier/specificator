@@ -57,7 +57,7 @@ module Specificator::Expectation
 
     def association_type
       return @association_type if defined?(@association_type)
-      @association_type = association_type_for(association) || association_type_for(association.delegate_reflection)
+      @association_type = association_type_for(association) || association_type_for(association.send(:delegate_reflection))
     end
 
     def association_type_for(association)
