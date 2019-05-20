@@ -57,8 +57,14 @@ module Specificator::Expectation
 
     def association_type
       return @association_type if defined?(@association_type)
-      type = association.class.to_s.match(/(\w+)Reflection$/)[1]&.underscore&.to_sym
-      @association_type = ASSOCIATIONS_MAPPING[type]
+      delegated_type = association_type_for(association.delegate_reflection)
+      type = association_type_for(association)
+      @association_type = ASSOCIATIONS_MAPPING[delegated_type] || ASSOCIATIONS_MAPPING[type]
+    end
+
+    def association_type_for(association)
+      return unless association
+      association.class.to_s.match(/(\w+)Reflection$/)[1]&.underscore&.to_sym
     end
 
   end
