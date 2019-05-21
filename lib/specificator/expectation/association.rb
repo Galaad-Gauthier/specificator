@@ -30,7 +30,7 @@ module Specificator::Expectation
     def call
       return unless valid?
 
-      "it { should #{expectation} }"
+      "it { should #{expectation} } #{Specificator::Generator::WATERMARK}"
     end
 
     def valid?

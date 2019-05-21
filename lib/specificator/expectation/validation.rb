@@ -1,5 +1,5 @@
 module Specificator::Expectation
-  class Validator
+  class Validation
 
     OPTIONS_MAPPING = {
       absence: {
@@ -85,7 +85,7 @@ module Specificator::Expectation
     def call
       return unless valid?
 
-      expectations.map{ |expectation| "it { should #{expectation} }" }
+      expectations.map{ |expectation| "it { should #{expectation} } #{Specificator::Generator::WATERMARK}" }
     end
 
     def valid?
