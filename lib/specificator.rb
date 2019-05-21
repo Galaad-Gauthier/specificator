@@ -44,7 +44,7 @@ module Specificator
         file.write GENERATOR_WATERMARK + "\n"
         file.write shared_examples_for(validators_expectations, "#{model_name.downcase}_validations")
         file.write shared_examples_for(associations_expectations, "#{model_name.downcase}_associations")
-        file.write GENERATOR_WATERMARK
+        file.write "\n" + GENERATOR_WATERMARK
       end
     end
 
