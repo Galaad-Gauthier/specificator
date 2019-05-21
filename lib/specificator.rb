@@ -38,10 +38,13 @@ module Specificator
     end
 
     def update_shared_specs!
+      return if already_has_shared_specs?
+
       File.open(shared_spec_path, 'w') do |file|
         file.write GENERATOR_WATERMARK + "\n"
         file.write shared_examples_for(validators_expectations, "#{model_name.downcase}_validations")
         file.write shared_examples_for(associations_expectations, "#{model_name.downcase}_associations")
+        file.write GENERATOR_WATERMARK
       end
     end
 
@@ -63,6 +66,12 @@ module Specificator
 
     def already_has_includers?
       File.read(model_spec_path) =~ /#{GENERATOR_WATERMARK}/
+    end
+
+    def already_has_shared_specs?
+      File.read(shared_spec_path) =~ /#{GENERATOR_WATERMARK}/
+    rescue
+      false
     end
 
     def model_spec_path
