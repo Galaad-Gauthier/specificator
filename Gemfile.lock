@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    specificator (0.2.2)
+    specificator (0.3.2)
 
 GEM
   remote: https://rubygems.org/
@@ -15,6 +15,9 @@ DEPENDENCIES
   bundler (~> 2.0)
   rake (~> 10.0)
   specificator!
+
+RUBY VERSION
+   ruby 2.6.3p62
 
 BUNDLED WITH
    2.0.1
